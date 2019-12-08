@@ -1,8 +1,9 @@
+extern crate chrono;
 extern crate reqwest;
+extern crate roxmltree;
 
 use roxmltree::{Document, Node};
-use std::time;
-use std::time::SystemTime;
+use std::str::ParseBoolError;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     //    let _response: String = reqwest::get("https://feeds.feedburner.com/Metafilter")?.text()?;
@@ -13,27 +14,44 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 }
 
 #[derive(Debug)]
-struct Feed<'a> {
-    entries: Vec<FeedItem<'a>>,
+struct Feed {
+    entries: Vec<FeedItem>,
 }
 
+/// `Timestamp` values are "seconds since the UNIX epoch"; if you're after milliseconds since then,
+/// use `TimestampMillis`.
+///
+/// Cf <https://docs.rs/chrono/0.4.6/chrono/struct.DateTime.html#method.timestamp>
 #[derive(Debug, PartialEq)]
-struct FeedItem<'a> {
+struct Timestamp(pub i64);
+
+#[derive(Debug, PartialEq)]
+struct FeedItem {
     title: String,
-    link: &'a str,
-    desc: &'a str,
-    guid: ItemGuid<'a>,
-    publication_date: time::SystemTime,
+    link: String,
+    desc: String,
+    guid: ItemGuid,
+    publication_date: Timestamp,
 }
 
 #[derive(Debug, PartialEq)]
-struct ItemGuid<'a> {
+struct ItemGuid {
     is_permalink: bool,
-    content: &'a str,
+    content: String,
 }
 
 #[derive(Debug)]
 enum FeedItemError {
+    DescriptionNodeMissing,
+    GuidNodeEmpty,
+    GuidNodeMissing,
+    GuidNodeOmitsPermalink,
+    GuidNodePermalinkInvalid(ParseBoolError),
+    LinkNodeEmpty,
+    LinkNodeMissing,
+    PubDateNodeEmpty,
+    PubDateNodeInvalid(chrono::ParseError),
+    PubDateNodeMissing,
     TitleNodeEmpty,
     TitleNodeMissing,
 }
@@ -43,44 +61,95 @@ enum FeedError {
     XmlParseFailure(roxmltree::Error),
 }
 
-fn decode_feed<'a, I>(now: SystemTime, src: &str) -> Result<I, FeedError>
-where
-    I: IntoIterator<Item = Result<FeedItem<'a>, FeedItemError>>,
-{
+fn decode_feed(src: &str) -> Result<Vec<Result<FeedItem, FeedItemError>>, FeedError> {
     let doc: Document = match roxmltree::Document::parse(&src) {
         Ok(doc) => doc,
-        Err(e) => return Result::Err(FeedError::XmlParseFailure(e)),
+        Err(e) => return Err(FeedError::XmlParseFailure(e)),
     };
 
     //    let channel = doc.descendants();
 
-    return Result::ok(
-        doc.descendants()
-            .map(|itemNode| decode_feed_item(now, itemNode)),
-    );
+    return Ok(doc
+        .descendants()
+        .map(|item_node| decode_feed_item(item_node))
+        // fixme: don't eagerly evaluate the iterator here, leave that for later (How?)
+        .collect());
 }
 
-fn decode_feed_item<'a>(now: SystemTime, item_node: Node) -> Result<FeedItem<'a>, FeedItemError> {
-    let elem = match item_node
+fn decode_feed_item(item_node: Node) -> Result<FeedItem, FeedItemError> {
+    let title = match item_node
         .descendants()
         .find(|n| n.tag_name().name() == "title")
     {
-        None => return Result::Err(FeedItemError::TitleNodeMissing),
+        None => return Err(FeedItemError::TitleNodeMissing),
         Some(node) => match node.text() {
-            None => return Result::Err(FeedItemError::TitleNodeEmpty),
+            None => return Err(FeedItemError::TitleNodeEmpty),
             Some(text) => text,
         },
     };
 
-    return Result::Ok(FeedItem {
-        title: String::from(elem),
-        link: "",
-        desc: "",
-        guid: ItemGuid {
-            is_permalink: false,
-            content: "",
+    let link = match item_node
+        .descendants()
+        .find(|n| n.tag_name().name() == "link")
+    {
+        None => return Err(FeedItemError::LinkNodeMissing),
+        Some(node) => match node.text() {
+            None => return Err(FeedItemError::LinkNodeEmpty),
+            Some(text) => text,
         },
-        publication_date: now,
+    };
+
+    let description = match item_node
+        .descendants()
+        .find(|n| n.tag_name().name() == "description")
+    {
+        None => return Err(FeedItemError::DescriptionNodeMissing),
+        Some(node) => node.text().unwrap_or(""),
+    };
+
+    let guid: (&str, bool) = match item_node
+        .descendants()
+        .find(|n| n.tag_name().name() == "guid")
+    {
+        None => return Err(FeedItemError::GuidNodeMissing),
+        Some(node) => (
+            match node.text() {
+                None => return Err(FeedItemError::GuidNodeEmpty),
+                Some(text) => text,
+            },
+            match node.attribute("isPermaLink") {
+                None => return Err(FeedItemError::GuidNodeOmitsPermalink),
+                Some(contents) => match contents.parse::<bool>() {
+                    Err(e) => return Err(FeedItemError::GuidNodePermalinkInvalid(e)),
+                    Ok(b) => b,
+                },
+            },
+        ),
+    };
+
+    let pub_date: Timestamp = match item_node
+        .descendants()
+        .find(|n| n.tag_name().name() == "pubDate")
+    {
+        None => return Err(FeedItemError::PubDateNodeMissing),
+        Some(node) => match node.text() {
+            None => return Err(FeedItemError::PubDateNodeEmpty),
+            Some(text) => match chrono::DateTime::parse_from_rfc2822(text) {
+                Err(err) => return Err(FeedItemError::PubDateNodeInvalid(err)),
+                Ok(date) => Timestamp(date.timestamp()),
+            },
+        },
+    };
+
+    return Ok(FeedItem {
+        title: String::from(title),
+        link: String::from(link),
+        desc: String::from(description),
+        guid: ItemGuid {
+            is_permalink: guid.1,
+            content: String::from(guid.0),
+        },
+        publication_date: pub_date,
     });
 }
 
@@ -111,21 +180,21 @@ mod tests {
             <wfw:commentRss>http://example.com/rss</wfw:commentRss>
         </item>
     </channel>
-</rss>"#;
-        let now = SystemTime::now();
+</rss>
+"#;
 
         let expected = FeedItem {
             title: String::from("a Title"),
-            link: "",
-            desc: "",
+            link: String::from("http://example.com"),
+            desc: String::from("Some Text"),
             guid: ItemGuid {
                 is_permalink: false,
-                content: "",
+                content: String::from("tag:metafilter.com,2019:site.184490"),
             },
-            publication_date: now,
+            publication_date: Timestamp(1575696199),
         };
 
-        match decode_feed::<Iterator>(now, sample) {
+        match decode_feed(sample) {
             Ok(items) => match items.first() {
                 None => assert!(false, "no items were returned"),
                 Some(item) => match item {
