@@ -6,6 +6,18 @@ update_configs:
     default_reviewers:
       - "r-k-b"
 
+  - package_manager: "javascript"
+    directory: "/frontend/"
+    update_schedule: "live"
+    default_reviewers:
+      - "r-k-b"
+
+  - package_manager: "github_actions"
+    directory: "/"
+    update_schedule: "live"
+    default_reviewers:
+      - "r-k-b"
+
   - package_manager: "elm"
     directory: "/frontend/"
     update_schedule: "daily"
