@@ -1,6 +1,6 @@
 version: 1
 update_configs:
-  - package_manager: "rust"
+  - package_manager: "rust:cargo"
     directory: "/src/fetcher/"
     update_schedule: "live"
     default_reviewers:
