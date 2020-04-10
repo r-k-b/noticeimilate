@@ -14,7 +14,7 @@ update_configs:
 
   - package_manager: "github_actions"
     directory: "/"
-    update_schedule: "live"
+    update_schedule: "daily"
     default_reviewers:
       - "r-k-b"
 
