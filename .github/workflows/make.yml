@@ -8,6 +8,7 @@ jobs:
     name: Node ${{ matrix.node }} sample
     steps:
       - uses: actions/checkout@v2
+
       - uses: actions/cache@v1
         name: cache elm
         with:
@@ -15,20 +16,36 @@ jobs:
           key: ${{ runner.os }}-elm-${{ hashFiles('frontend/elm.json') }}
           restore-keys: |
             ${{ runner.os }}-elm-
+
       - uses: actions/cache@v1
-        name: cache npm
+        name: cache npm (frontend)
         with:
           path: ~/frontend/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('frontend/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
+
+      - name: build fetcher
+        uses: actions-rs/cargo@v1
+        with:
+          command: build
+        working-directory: src/fetcher
+
+      - name: test fetcher
+        uses: actions-rs/cargo@v1
+        with:
+          command: test
+        working-directory: src/fetcher
+
       - name: Setup node
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node }}
+
       - name: install frontend
         run: npm install
         working-directory: frontend
+
       - name: test frontend
         run: npm test
         working-directory: frontend
