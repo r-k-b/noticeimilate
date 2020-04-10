@@ -12,18 +12,36 @@ jobs:
       - uses: actions/cache@v1
         name: cache elm
         with:
-          path: ~/frontend/.elm
-          key: ${{ runner.os }}-elm-${{ hashFiles('frontend/elm.json') }}
+          path: ~/.elm
+          key: ${{ runner.os }}-elm-${{ hashFiles('**/elm.json') }}
           restore-keys: |
             ${{ runner.os }}-elm-
 
       - uses: actions/cache@v1
         name: cache npm (frontend)
         with:
-          path: ~/frontend/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('frontend/package-lock.json') }}
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
+
+      - name: Cache cargo registry
+        uses: actions/cache@v1
+        with:
+          path: ~/.cargo/registry
+          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Cache cargo index
+        uses: actions/cache@v1
+        with:
+          path: ~/.cargo/git
+          key: ${{ runner.os }}-cargo-index-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Cache cargo build (for fetcher)
+        uses: actions/cache@v1
+        with:
+          path: src/fetcher/target
+          key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('src/fetcher/Cargo.lock') }}
 
       - name: build fetcher
         uses: actions-rs/cargo@v1
