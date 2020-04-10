@@ -27,15 +27,15 @@ jobs:
 
       - name: build fetcher
         uses: actions-rs/cargo@v1
+        working-directory: src/fetcher
         with:
           command: build
-        working-directory: src/fetcher
 
       - name: test fetcher
         uses: actions-rs/cargo@v1
+        working-directory: src/fetcher
         with:
           command: test
-        working-directory: src/fetcher
 
       - name: Setup node
         uses: actions/setup-node@v1
