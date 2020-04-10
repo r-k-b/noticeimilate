@@ -2,6 +2,7 @@
   <dictionary name="User">
     <words>
       <w>chrono</w>
+      <w>gitignore</w>
       <w>metafilter</w>
       <w>perma</w>
       <w>reqwest</w>

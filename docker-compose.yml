@@ -6,6 +6,59 @@ services:
     image: postgres:12.0-alpine
     restart: always
     environment:
-      POSTGRES_PASSWORD: example
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
     ports:
-      - 5432:5432
+      - '5433:5432'
+    volumes:
+      - ./db/sql:/docker-entrypoint-initdb.d
+      - postgres_data:/var/lib/postgresql/data
+      - ./secrets:/run/secrets
+    healthcheck:
+      test:
+        ['CMD-SHELL', 'pg_isready --username gatekeeper --dbname noticeimilate_db']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - noticeimilate_net
+
+  prometheus:
+    image: prom/prometheus:v2.17.1
+    ports:
+      - 9090:9090
+    volumes:
+      - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    networks:
+      - noticeimilate_net
+
+  grafana:
+    image: grafana/grafana:6.7.2
+    ports:
+      - 3333:3000
+    volumes:
+      - ./monitoring/grafana/grafana.ini:/etc/grafana/grafana.ini
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana/dashboards:/var/lib/grafana/dashboards
+    networks:
+      - noticeimilate_net
+
+  pg_metrics:
+    image: wrouesnel/postgres_exporter:v0.8.0
+    ports:
+      - 9187:9187
+    environment:
+      - DATA_SOURCE_NAME=postgresql://postgres_exporter:password@db:5432/postgres?sslmode=disable
+    depends_on:
+      - db
+    networks:
+      - noticeimilate_net
+
+volumes:
+  postgres_data:
+  prometheus_data:
+  grafana_data:
+
+networks:
+  noticeimilate_net:
