@@ -26,7 +26,10 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node }}
-      - run: npm install
-      - run: npm test
-      - name: Review
-        run: npm run review
+      - run: npm install (frontend)
+        working_directory: frontend
+      - run: npm test (frontend)
+        working_directory: frontend
+#      - name: Review (frontend)
+#        working_directory: frontend
+#        run: npm run review
