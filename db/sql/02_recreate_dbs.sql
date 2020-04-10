@@ -1,5 +1,5 @@
 CREATE DATABASE noticeimilate_db
-    WITH 
+    WITH
     OWNER = gatekeeper
     ENCODING = 'UTF8'
     LC_COLLATE = 'en_US.utf8'

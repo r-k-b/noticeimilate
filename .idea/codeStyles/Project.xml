@@ -1,0 +1,8 @@
+<component name="ProjectCodeStyleConfiguration">
+  <code_scheme name="Project" version="173">
+    <PostgresCodeStyleSettings version="2">
+      <option name="KEYWORD_CASE" value="0" />
+      <option name="IDENTIFIER_CASE" value="1" />
+    </PostgresCodeStyleSettings>
+  </code_scheme>
+</component>
