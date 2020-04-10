@@ -1,3 +1,5 @@
+![.github/workflows/make.yml](https://github.com/r-k-b/noticeimilate/workflows/.github/workflows/make.yml/badge.svg)
+
 # noticeimilate
 
 notice + assimilate
