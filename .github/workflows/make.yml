@@ -27,15 +27,17 @@ jobs:
 
       - name: build fetcher
         uses: actions-rs/cargo@v1
-        working-directory: src/fetcher
         with:
           command: build
+          # `working-directory` not supported; https://github.com/actions-rs/cargo/issues/6
+          args: --manifest-path src/fetcher/Cargo.toml
 
       - name: test fetcher
         uses: actions-rs/cargo@v1
-        working-directory: src/fetcher
         with:
           command: test
+          # `working-directory` not supported; https://github.com/actions-rs/cargo/issues/6
+          args: --manifest-path src/fetcher/Cargo.toml
 
       - name: Setup node
         uses: actions/setup-node@v1
