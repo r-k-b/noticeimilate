@@ -43,6 +43,12 @@ jobs:
           path: src/fetcher/target
           key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('src/fetcher/Cargo.lock') }}
 
+      - name: Cache cargo build (for replenisher)
+        uses: actions/cache@v1
+        with:
+          path: src/replenisher/target
+          key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('src/replenisher/Cargo.lock') }}
+
       - name: build fetcher
         uses: actions-rs/cargo@v1
         with:
@@ -56,6 +62,20 @@ jobs:
           command: test
           # `working-directory` not supported; https://github.com/actions-rs/cargo/issues/6
           args: --manifest-path src/fetcher/Cargo.toml
+
+      - name: build replenisher
+        uses: actions-rs/cargo@v1
+        with:
+          command: build
+          # `working-directory` not supported; https://github.com/actions-rs/cargo/issues/6
+          args: --manifest-path src/replenisher/Cargo.toml
+
+      - name: test replenisher
+        uses: actions-rs/cargo@v1
+        with:
+          command: test
+          # `working-directory` not supported; https://github.com/actions-rs/cargo/issues/6
+          args: --manifest-path src/replenisher/Cargo.toml
 
       - name: Setup node
         uses: actions/setup-node@v1
