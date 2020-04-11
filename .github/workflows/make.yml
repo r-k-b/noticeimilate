@@ -37,45 +37,39 @@ jobs:
           path: ~/.cargo/git
           key: ${{ runner.os }}-cargo-index-${{ hashFiles('**/Cargo.lock') }}
 
-      - name: Cache cargo build (for fetcher)
+      - name: Cache cargo build
         uses: actions/cache@v1
         with:
-          path: src/fetcher/target
-          key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('src/fetcher/Cargo.lock') }}
-
-      - name: Cache cargo build (for replenisher)
-        uses: actions/cache@v1
-        with:
-          path: src/replenisher/target
-          key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('src/replenisher/Cargo.lock') }}
+          path: backend/target
+          key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('backend/Cargo.lock') }}
 
       - name: build fetcher
         uses: actions-rs/cargo@v1
         with:
           command: build
           # `working-directory` not supported; https://github.com/actions-rs/cargo/issues/6
-          args: --manifest-path src/fetcher/Cargo.toml
+          args: --manifest-path backend/Cargo.toml --bin fetcher
 
       - name: test fetcher
         uses: actions-rs/cargo@v1
         with:
           command: test
           # `working-directory` not supported; https://github.com/actions-rs/cargo/issues/6
-          args: --manifest-path src/fetcher/Cargo.toml
+          args: --manifest-path backend/Cargo.toml --bin fetcher
 
       - name: build replenisher
         uses: actions-rs/cargo@v1
         with:
           command: build
           # `working-directory` not supported; https://github.com/actions-rs/cargo/issues/6
-          args: --manifest-path src/replenisher/Cargo.toml
+          args: --manifest-path backend/Cargo.toml --bin replenisher
 
       - name: test replenisher
         uses: actions-rs/cargo@v1
         with:
           command: test
           # `working-directory` not supported; https://github.com/actions-rs/cargo/issues/6
-          args: --manifest-path src/replenisher/Cargo.toml
+          args: --manifest-path backend/Cargo.toml --bin replenisher
 
       - name: Setup node
         uses: actions/setup-node@v1
@@ -89,6 +83,7 @@ jobs:
       - name: test frontend
         run: npm test
         working-directory: frontend
+
 #      - name: Review
 #        working-directory: frontend
 #        run: npm run review

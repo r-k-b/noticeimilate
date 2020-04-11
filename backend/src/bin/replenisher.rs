@@ -2,9 +2,7 @@ extern crate config;
 extern crate postgres;
 extern crate postgres_types;
 
-mod settings;
-
-use postgres::{Client, NoTls};
+use postgres::{Client, NoTls, Row};
 use postgres_types::{FromSql, ToSql};
 use settings::Settings;
 
@@ -35,7 +33,7 @@ fn main() {
             .as_ref(),
         );
 
-    let rows = connection
+    let rows: Vec<postgres::Row> = connection
         .query(
             "SELECT feeds.id, feeds.url, feeds.feed_type
 FROM feeds

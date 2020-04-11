@@ -1,7 +1,7 @@
 version: 1
 update_configs:
   - package_manager: "rust:cargo"
-    directory: "/src/fetcher/"
+    directory: "/backend/"
     update_schedule: "live"
     default_reviewers:
       - "r-k-b"

@@ -1,5 +1,0 @@
-[db]
-database = "noticeimilate_db"
-username = "postgres"
-host = "localhost"
-port = "5433"

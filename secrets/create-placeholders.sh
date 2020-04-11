@@ -19,3 +19,9 @@ if [ ! -f "$DIR"/fetcher.toml ]; then cat >"$DIR"/fetcher.toml <<EOF
 password = ""
 EOF
 fi
+
+if [ ! -f "$DIR"/replenisher.toml ]; then cat >"$DIR"/replenisher.toml <<EOF
+[db]
+password = ""
+EOF
+fi

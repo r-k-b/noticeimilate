@@ -2,16 +2,12 @@
 <module type="CPP_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/src/fetcher/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/fetcher/examples" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/fetcher/tests" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/fetcher/benches" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/replenisher/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/replenisher/examples" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/replenisher/tests" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/replenisher/benches" isTestSource="true" />
-      <excludeFolder url="file://$MODULE_DIR$/src/fetcher/target" />
-      <excludeFolder url="file://$MODULE_DIR$/src/replenisher/target" />
+      <sourceFolder url="file://$MODULE_DIR$/backend/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/backend/examples" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/backend/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/backend/benches" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/backend/target" />
+      <excludePattern pattern="elm-stuff" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -1,9 +1,7 @@
 extern crate config;
 extern crate postgres;
 
-mod settings;
-
-use postgres::{Client, NoTls};
+use postgres::{Client, NoTls, Row};
 use settings::Settings;
 
 struct ToFetch {
@@ -14,15 +12,16 @@ struct ToFetch {
 fn main() {
     let settings: Settings = Settings::new().unwrap();
 
-    let mut conn: Client = Client::connect(settings.db_connection_string().as_ref(), NoTls).expect(
-        format!(
-            "Failed to connect to db {}",
-            settings.redacted_db_connection_string(),
-        )
-        .as_ref(),
-    );
+    let mut connection: Client = Client::connect(settings.db_connection_string().as_ref(), NoTls)
+        .expect(
+            format!(
+                "Failed to connect to db {}",
+                settings.redacted_db_connection_string(),
+            )
+            .as_ref(),
+        );
 
-    let rows = conn
+    let rows: Vec<postgres::Row> = connection
         .query(
             "SELECT feeds.id, feeds.url
 FROM fetch_queue,

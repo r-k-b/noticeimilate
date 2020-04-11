@@ -41,8 +41,10 @@ impl Settings {
         let mut s = Config::new();
 
         s.merge(File::with_name("config/Default.toml"))?;
-        s.merge(File::with_name("../../secrets/fetcher.toml"))?;
+        s.merge(File::with_name("../secrets/fetcher.toml"))?;
+        // s.merge(File::with_name("../secrets/replenisher.toml"))?;
         s.merge(Environment::with_prefix("FETCHER"))?;
+        // s.merge(Environment::with_prefix("REPLENISHER"))?;
 
         // You can deserialize (and thus freeze) the entire configuration as
         s.try_into()
