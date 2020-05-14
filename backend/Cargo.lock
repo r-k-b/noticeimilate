@@ -412,7 +412,7 @@ name = "noticeimilate-backend"
 version = "0.1.0"
 dependencies = [
  "config 0.10.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "postgres 0.17.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "postgres 0.17.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "postgres-types 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde 1.0.110 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
@@ -493,7 +493,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "postgres"
-version = "0.17.2"
+version = "0.17.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "bytes 0.5.4 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -501,7 +501,7 @@ dependencies = [
  "futures 0.3.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "log 0.4.8 (registry+https://github.com/rust-lang/crates.io-index)",
  "tokio 0.2.17 (registry+https://github.com/rust-lang/crates.io-index)",
- "tokio-postgres 0.5.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "tokio-postgres 0.5.4 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -807,7 +807,7 @@ dependencies = [
 
 [[package]]
 name = "tokio-postgres"
-version = "0.5.3"
+version = "0.5.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "async-trait 0.1.30 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -991,7 +991,7 @@ dependencies = [
 "checksum phf_shared 0.8.0 (registry+https://github.com/rust-lang/crates.io-index)" = "c00cf8b9eafe68dde5e9eaa2cef8ee84a9336a47d566ec55ca16589633b65af7"
 "checksum pin-project-lite 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)" = "237844750cfbb86f67afe27eee600dfbbcb6188d734139b534cbfbf4f96792ae"
 "checksum pin-utils 0.1.0-alpha.4 (registry+https://github.com/rust-lang/crates.io-index)" = "5894c618ce612a3fa23881b152b608bafb8c56cfc22f434a3ba3120b40f7b587"
-"checksum postgres 0.17.2 (registry+https://github.com/rust-lang/crates.io-index)" = "18741b59a558e4dfdb9c968e8126dccbefd6a16bf54e3bc5668d420b4c4ed71b"
+"checksum postgres 0.17.3 (registry+https://github.com/rust-lang/crates.io-index)" = "a08e48317fe57088aa1ff4a84a88a8401aee565f4ae5c201aa18d11c573ce350"
 "checksum postgres-derive 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)" = "c857dd221cb0e7d8414b894a0ce29eae44d453dda0baa132447878e75e701477"
 "checksum postgres-protocol 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)" = "3f611afe4d1407ebe7f3ced1ffc66f730fac1b1c13085e230a8cdcb921e97710"
 "checksum postgres-types 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "e634590e8812c500088d88db721195979223dabb05149f43cb50931d0ff5865d"
@@ -1030,7 +1030,7 @@ dependencies = [
 "checksum syn 1.0.17 (registry+https://github.com/rust-lang/crates.io-index)" = "0df0eb663f387145cab623dea85b09c2c5b4b0aef44e945d928e682fce71bb03"
 "checksum thread_local 1.0.1 (registry+https://github.com/rust-lang/crates.io-index)" = "d40c6d1b69745a6ec6fb1ca717914848da4b44ae29d9b3080cbee91d72a69b14"
 "checksum tokio 0.2.17 (registry+https://github.com/rust-lang/crates.io-index)" = "39fb9142eb6e9cc37f4f29144e62618440b149a138eee01a7bbe9b9226aaf17c"
-"checksum tokio-postgres 0.5.3 (registry+https://github.com/rust-lang/crates.io-index)" = "524da2f17264514c854ac770177bdb810f0db7e706ae69f143d6e6828e3c4fe3"
+"checksum tokio-postgres 0.5.4 (registry+https://github.com/rust-lang/crates.io-index)" = "d56010a704311361b7c9e870aaa4ddffaf9f2db89cbcf3e14773ac8a14469c9c"
 "checksum tokio-util 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)" = "be8242891f2b6cbef26a2d7e8605133c2c554cd35b3e4948ea892d6d68436499"
 "checksum toml 0.5.6 (registry+https://github.com/rust-lang/crates.io-index)" = "ffc92d160b1eef40665be3a05630d003936a3bc7da7421277846c2613e92c71a"
 "checksum typenum 1.11.2 (registry+https://github.com/rust-lang/crates.io-index)" = "6d2783fe2d6b8c1101136184eb41be8b1ad379e4657050b8aaff0c79ee7575f9"
