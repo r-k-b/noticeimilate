@@ -13,5 +13,5 @@ path = "src/settings.rs"
 [dependencies]
 config = "0.10"
 postgres = "0.17.3"
-postgres-types = { version="0.1.1", features=["derive"] }
+postgres-types = { version="0.1.2", features=["derive"] }
 serde = {version="1.0.113", features=["derive"]}
