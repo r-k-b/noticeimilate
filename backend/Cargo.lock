@@ -413,7 +413,7 @@ version = "0.1.0"
 dependencies = [
  "config 0.10.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "postgres 0.17.3 (registry+https://github.com/rust-lang/crates.io-index)",
- "postgres-types 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "postgres-types 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde 1.0.113 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
@@ -533,7 +533,7 @@ dependencies = [
 
 [[package]]
 name = "postgres-types"
-version = "0.1.1"
+version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "bytes 0.5.4 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -821,7 +821,7 @@ dependencies = [
  "phf 0.8.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "pin-project-lite 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "postgres-protocol 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "postgres-types 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "postgres-types 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "tokio 0.2.17 (registry+https://github.com/rust-lang/crates.io-index)",
  "tokio-util 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
@@ -994,7 +994,7 @@ dependencies = [
 "checksum postgres 0.17.3 (registry+https://github.com/rust-lang/crates.io-index)" = "a08e48317fe57088aa1ff4a84a88a8401aee565f4ae5c201aa18d11c573ce350"
 "checksum postgres-derive 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)" = "c857dd221cb0e7d8414b894a0ce29eae44d453dda0baa132447878e75e701477"
 "checksum postgres-protocol 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)" = "3f611afe4d1407ebe7f3ced1ffc66f730fac1b1c13085e230a8cdcb921e97710"
-"checksum postgres-types 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "e634590e8812c500088d88db721195979223dabb05149f43cb50931d0ff5865d"
+"checksum postgres-types 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)" = "3d14b0a4f433b0e0b565bb0fbc0ac9fc3d79ca338ba265ad0e7eef0f3bcc5e94"
 "checksum ppv-lite86 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)" = "74490b50b9fbe561ac330df47c08f3f33073d2d00c150f719147d7c54522fa1b"
 "checksum proc-macro-hack 0.5.15 (registry+https://github.com/rust-lang/crates.io-index)" = "0d659fe7c6d27f25e9d80a1a094c223f5246f6a6596453e09d7229bf42750b63"
 "checksum proc-macro-nested 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)" = "8e946095f9d3ed29ec38de908c22f95d9ac008e424c7bcae54c75a79c527c694"
