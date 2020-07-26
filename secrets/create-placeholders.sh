@@ -10,18 +10,35 @@ set -e
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 # Files that should contain zero linefeeds
-touch "$DIR"/postgres_password
-touch "$DIR"/gatekeeper_db_user_pw
+mkEmpty () {
+	touch "$DIR"/$1
+	echo Created single-line empty file: "$DIR"/$1
+}
+mkEmpty postgres_password
+mkEmpty gatekeeper_db_user_pw
+
+#debugging
+rm -f "$DIR"/fetcher.toml
+rm -f "$DIR"/replenisher.toml
+
 
 # Files that have structured contents (json / yml / toml / ini etc)
-if [ ! -f "$DIR"/fetcher.toml ]; then cat >"$DIR"/fetcher.toml <<EOF
-[db]
-password = ""
-EOF
-fi
 
-if [ ! -f "$DIR"/replenisher.toml ]; then cat >"$DIR"/replenisher.toml <<EOF
+mkWithHeredoc () {
+	if [ ! -f "$DIR"/"$1" ]; then
+		cat >"$DIR"/"$1";
+		echo Created template file: "$DIR"/"$1";
+	else
+		/dev/null;
+	fi
+}
+
+mkWithHeredoc fetcher.toml <<EOF
 [db]
 password = ""
 EOF
-fi
+
+mkWithHeredoc replenisher.toml <<EOF
+[db]
+password = ""
+EOF
