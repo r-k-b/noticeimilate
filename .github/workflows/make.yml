@@ -44,28 +44,28 @@ jobs:
           key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('backend/Cargo.lock') }}
 
       - name: build fetcher
-        uses: actions-rs/cargo@v1
+        uses: actions-rs/cargo@v1.0.3
         with:
           command: build
           # `working-directory` not supported; https://github.com/actions-rs/cargo/issues/6
           args: --manifest-path backend/Cargo.toml --bin fetcher
 
       - name: test fetcher
-        uses: actions-rs/cargo@v1
+        uses: actions-rs/cargo@v1.0.3
         with:
           command: test
           # `working-directory` not supported; https://github.com/actions-rs/cargo/issues/6
           args: --manifest-path backend/Cargo.toml --bin fetcher
 
       - name: build replenisher
-        uses: actions-rs/cargo@v1
+        uses: actions-rs/cargo@v1.0.3
         with:
           command: build
           # `working-directory` not supported; https://github.com/actions-rs/cargo/issues/6
           args: --manifest-path backend/Cargo.toml --bin replenisher
 
       - name: test replenisher
-        uses: actions-rs/cargo@v1
+        uses: actions-rs/cargo@v1.0.3
         with:
           command: test
           # `working-directory` not supported; https://github.com/actions-rs/cargo/issues/6
