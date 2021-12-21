@@ -10,7 +10,7 @@
   "author": "Robert K. Bell <robert.k.bell@gmail.com>",
   "license": "AGPL-3.0",
   "dependencies": {
-    "cypress": "^6.7.1",
+    "cypress": "^9.2.0",
     "elm": "^0.19.1-5",
     "elm-format": "^0.8.5",
     "elm-live": "^4.0.2",
