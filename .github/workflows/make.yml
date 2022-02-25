@@ -72,7 +72,7 @@ jobs:
           args: --manifest-path backend/Cargo.toml --bin replenisher
 
       - name: Setup node
-        uses: actions/setup-node@v2.1.5
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
 
